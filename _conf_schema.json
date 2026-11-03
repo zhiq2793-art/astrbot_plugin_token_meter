@@ -1,0 +1,64 @@
+{
+  "max_tokens": {
+    "description": "对话 Token 上限（用于计算百分比）",
+    "type": "int",
+    "default": 1000000,
+    "hint": "只用来算百分比的分母，不影响模型实际窗口。想让百分比等于「离压缩还有多远」，就填压缩线：窗口 × 0.82。例：flash 窗口 767000，压缩线 628940。"
+  },
+  "show_bar": {
+    "description": "显示进度条",
+    "type": "bool",
+    "default": true
+  },
+  "show_detail": {
+    "description": "显示明细（消息条数、真实用量对照）",
+    "type": "bool",
+    "default": true
+  },
+  "count_think": {
+    "description": "把思考内容（think）也算进 token",
+    "type": "bool",
+    "default": true,
+    "hint": "关掉后只算真正说出口的话。思考内容也确实占上下文，一般别关。"
+  },
+  "warn_percent": {
+    "description": "查询时超过这个百分比加一句提醒",
+    "type": "float",
+    "default": 80.0
+  },
+  "remind_enable": {
+    "description": "到线自动提醒",
+    "type": "bool",
+    "default": true,
+    "hint": "每回复一次就检查一次，到阈值在回复末尾附一句。关掉就只剩 /查询token。"
+  },
+  "remind_percent": {
+    "description": "自动提醒的阈值（百分比）",
+    "type": "float",
+    "default": 95.0,
+    "hint": "按 max_tokens 算。填 95，就是到上限的 95% 才开始提醒。"
+  },
+  "remind_cooldown": {
+    "description": "提醒冷却（token）",
+    "type": "int",
+    "default": 5000,
+    "hint": "提醒过一次之后，要再涨这么多 token 才会再提醒，免得每句话都念。"
+  },
+  "remind_private_only": {
+    "description": "只在私聊提醒",
+    "type": "bool",
+    "default": true,
+    "hint": "关掉后群聊里也会提醒。"
+  },
+  "remind_target": {
+    "description": "只对指定会话提醒（留空＝所有私聊）",
+    "type": "string",
+    "default": "",
+    "hint": "填会话标识，例如 123***789:FriendMessage:987***321（星号只是脱敏写法）。留空就所有私聊都提醒。"
+  },
+  "verbose": {
+    "description": "在日志里打印细节",
+    "type": "bool",
+    "default": false
+  }
+}

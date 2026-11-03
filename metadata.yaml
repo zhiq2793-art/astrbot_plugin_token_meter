@@ -1,0 +1,11 @@
+name: astrbot_plugin_token_meter
+display_name: 对话 Token 用量（/查询token + 到线提醒）
+author: zhiq2793-art
+description: >
+  一，/查询token 查看当前对话占用了多少 token，按百分比和进度条显示。
+  二，每回复一次就检查一次，到阈值（默认 95%）在回复末尾附一句提醒，
+     带冷却，不会每句都念。
+  v1.2 修掉了「查询说 30.2%、提醒说 308%」那个 bug ——
+  两处现在走同一个统计口径。
+version: 1.2.0
+repo: ""
