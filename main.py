@@ -160,8 +160,12 @@ class TokenMeterPlugin(Star):
         self.data_dir = Path(__file__).resolve().parent.parent.parent
         self.db_path = self.data_dir / "data_v4.db"
 
-        # 上一次提醒时的 token 数，用来做冷却
-        self._last_reminded = 0
+        # 上一次提醒时的 token 数，按会话分开做冷却。
+        #
+        # v1.3 之前这是个整数，实例级全局。多私聊同时用的时候会互相干扰：
+        # A 会话提醒过之后，B 会话涨得不够多就被压住了，该提醒的没提醒。
+        # 改成 {umo: token} 之后，每个会话各算各的。
+        self._last_reminded = {}
 
         logger.info(f"[Token用量] 数据库路径: {self.db_path}")
         logger.info(
@@ -495,11 +499,12 @@ class TokenMeterPlugin(Star):
         if pct < pct_line:
             return None
 
-        # 冷却：已经提醒过，且涨得不够多，就不再念
-        if self._last_reminded > 0 and (used - self._last_reminded) < cooldown:
+        # 冷却：同一个会话里，提醒过之后要再涨够才念
+        last = self._last_reminded.get(umo, 0)
+        if last > 0 and (used - last) < cooldown:
             return None
 
-        self._last_reminded = used
+        self._last_reminded[umo] = used
 
         left = max_tokens - used
         if left > 0:
