@@ -566,3 +566,5 @@ class TokenMeterPlugin(Star):
             yield event.plain_result(f"查 token 失败：{e}")
             return
         yield event.plain_result(text)
+
+#I Love You 沐
